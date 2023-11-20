@@ -1,0 +1,150 @@
+
+*****************************************************************
+
+           COPYRIGHT NOTIFICATION
+
+This program discloses material protectable under copyright laws of
+the United States. Permission to copy and modify this software and its
+documentation for internal research use is hereby granted, provided
+that this notice is retained thereon and on all copies or modifications. 
+The University of Chicago makes no representations as to the suitability 
+and operability of this software for any purpose. 
+It is provided "as is" without express or implied warranty.
+
+Use of this software for commercial purposes is expressly prohibited
+without contacting 
+
+   Jorge J. More'
+   Mathematics and Computer Science Division
+   Argonne National Laboratory
+   9700 S. Cass Ave.
+   Argonne, Illinois 60439-4844
+   e-mail: more@mcs.anl.gov
+
+Argonne National Laboratory with facilities in the states of
+Illinois and Idaho, is owned by The United States Government, and
+operated by the University of Chicago under provision of a contract
+with the Department of Energy.
+
+*****************************************************************
+
+           INSTRUCTIONS FOR SEQUENTIAL VERSION
+          
+The compressed tar file dgsol.tar.gz contains the dgsol
+package for distance geometry problems.
+
+1. Create the dgsol directory structure with
+
+       gzip -d dgsol.tar.gz
+       tar -xvf dgsol.tar
+
+   This produces the directory dgsol and several subdirectories.
+
+2. Set the environment variable DG_ARCH with one of the following:
+
+       setenv DG_ARCH linux 
+       setenv DG_ARCH rs6000 
+       setenv DG_ARCH IRIX64
+
+   This environment variable is needed because we mix Fortran and C code.
+ 
+3. Change directories to dgsol and install the dgsol libraries with
+ 
+       make libs
+
+4. Create the executable dgsol with
+   
+       make exec
+ 
+   in the subdirectory dgsol_s.
+
+4. Run the sample program with
+ 
+       dgsol -s3
+
+   Compare the output in dg.sum with the output in the sample
+   output file dg.linux.
+
+*****************************************************************
+
+           INSTRUCTIONS FOR PARALLEL VERSION
+          
+The compressed tar file dgsol.tar.gz contains the dgsol
+package for distance geometry problems.
+
+1. Create the dgsol directory structure with
+
+       gzip -d dgsol.tar.gz
+       tar -xvf dgsol.tar
+
+   This produces the directory dgsol and several subdirectories.
+
+2. Set the environment variable DG_ARCH with one of the following:
+
+       setenv DG_ARCH sun4 
+       setenv DG_ARCH rs6000 
+       setenv DG_ARCH IRIX64
+
+   This environment variable is needed because we mix Fortran and C code.
+
+3. The parallel version of DGSOL requires support for the MPICH message
+   passing library. This requires setting several environment variables
+   before making dgsol:
+  
+       setenv CC mpicc
+       setenv FC mpif77
+
+   The command mpirun must also be in your path. In most installations
+   this command can be found is
+
+       /usr/local/mpi/bin/mpirun
+
+   A machine file dg.machines.<DG_ARCH> also needs to be created in the drivers
+   directory containing the list of machines for the parallel execution.
+ 
+4. Change directories to dgsol and install the dgsol libraries with
+ 
+       make libs
+
+5. Create the executable dgsol with
+   
+       make exec
+ 
+   in the subdirectory dgsol_p. The LIBS definition of the Makefile in this 
+   directory may need to be modified to add libraries needed for MPICH, or 
+   to resolve external references.
+
+6. Run the sample program with
+ 
+       mpirun -np 3 dgsol -s3
+
+   Compare the output in dg.sum with the output in the sample
+   output file dg.linux.
+
+   The command mpirun -np 3 dgsol -s3 uses 3 processors to run dgsol -s3.
+   If we want to run on a specific set of machines we can use, for example,
+
+       mpirun -np 3 -machinefile dg_mach dgsol -s6
+
+   to use 3 processors (specified in dg_mach) to run dgsol -s6. 
+   Consult the mpich user guide for more information on mpirun.
+   
+
+*****************************************************************
+
+           ADDITIONAL INFORMATION
+
+Jorge J. More' and Zhijun Wu,
+Distance geometry optimization for protein structures, 
+Journal on Global Optimization, 15 (1999), pp. 219-234.
+
+The file dgsol.info has (minimal) documentation for DGSOL
+
+For current information, see
+
+http://www.mcs.anl.gov/~more/dgsol/dgsol.html
+
+*****************************************************************
+
+Last modification: December 22, 2004
+

@@ -1,0 +1,71 @@
+
+DGSOL solves the distance geometry problem of finding positions
+ x_1,...,x_n for atoms that satisfy the distance contraints
+
+      l_{i,j} <= || x_i - x_j || <= u_{i,j}
+
+DGSOL uses a global continuation algorithm, with Gaussian smoothing
+of a merit function that only depends on the sparse distance
+data. Several minimizers are traced in the continuation process, and
+the best minimizer is selected as the global minimizer.  In the
+current release of DGSOL, a variable-metric limited-memory code is
+used to trace the minimizers. More robust algorithms will be added
+in future releases. For additional information on this approach, see
+
+  http://www.mcs.anl.gov/~more/dgsol/dgsol.html
+
+===================
+DGSOL documentation
+===================
+
+  dgsol [-a#na] [-d#nd] [-s#ns] [input output summary]
+
+where
+
+  na = number of atoms
+
+  nd = number of distances
+
+  ns = number of solutions desired
+
+  input = name of file with distance data
+
+  output = name of file for solution coordinates
+
+  summary = name of file for a summary of the optimization process
+
+The summary file provides the following information
+
+   n_atoms      Number of atoms
+    n_dist      Number of distances
+     f_err      The value of the merit function
+  derr_min      The smallest error in the distances  
+  derr_avg      The average error in the distances
+  derr_max      The largest error in the distances
+
+The error in the distances is defined by
+
+  r_{i,j} = || x_i - x_j ||
+  errl    = min{ (r_{i,j} - l_{i,j})/l_{i,j}, 0 }
+  erru    = max{ (r_{i,j} - u_{i,j})/u_{i,j}, 0 }
+  err     = max{ errl, erru }
+
+The merit function is defined as the sum of terms of the form:
+
+  min^2 { r_{i,j}^2 - l_{i,j}^2 )/l_{i,j}^2, 0 } 
+  max^2 { r_{i,j}^2 - u_{i,j}^2 )/u_{i,j}^2, 0 }
+
+
+The file dg.data in the dgsol_s and dgsol_p directories contains
+sample data for DGSOL.  This data is identical with the data in
+data/data_set_1/graph.01.data 
+
+Additional test data is included in the directory data.  
+The README file in that directory describes the data.
+
+Jorge J. More' and Zhijun Wu
+Mathematics and Computer Science Division
+Argonne National Laboratory
+
+Last modification: June 29, 1998
+
